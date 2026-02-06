@@ -1,0 +1,201 @@
+## GUÍA DE INICIO RÁPIDO - PRIMEROS PASOS
+
+> Si nunca has usado Baserow ni GitHub Pages, comienza aquí.
+
+### Paso 1: Crear una cuenta Baserow (5 min)
+
+1. Abre https://baserow.io
+2. Haz clic en "Sign up" (Registrarse)
+3. Completa el formulario con:
+   - Email
+   - Contraseña
+   - Tu nombre
+4. Confirma tu correo (revisa el email)
+
+**Listo, ya tienes una cuenta Baserow gratis** ✅
+
+### Paso 2: Crear tu base de datos (10 min)
+
+1. En Baserow, haz clic en **"Create an application"** o **"Create"**
+2. Dale un nombre (ejemplo: "Mi Portafolio")
+3. Selecciona **"Database"**
+4. Haz clic en **"Create"**
+
+Ahora estás en tu base de datos vacía.
+
+### Paso 3: Crear una tabla (10 min)
+
+1. Haz clic en **"Create a new table"**
+2. Dale un nombre: "Proyectos" (sin tildes, sin espacios raros)
+3. Haz clic en **"Create table"**
+
+Verás una tabla vacía con una columna "Name".
+
+### Paso 4: Agregar columnas (5 min)
+
+Tu tabla necesita campos para que el sitio funcione. Agrega:
+
+1. Haz clic en **"+"** a la derecha de "Name"
+2. Crea estos campos:
+   - **Título** (tipo: Single line text) - Renombra "Name" a "Título"
+   - **Descripción** (tipo: Long text)
+   - **Imagen** (tipo: Single line text) - la URL de la imagen
+   - **Enlace** (tipo: Single line text) - link externo (opcional)
+   - **Fecha** (tipo: Date) - opcional
+
+Así queda:
+
+```
+| Título | Descripción | Imagen | Enlace | Fecha |
+|--------|-------------|--------|--------|-------|
+|        |             |        |        |       |
+```
+
+### Paso 5: Agregar datos de ejemplo (10 min)
+
+Agrega algunos proyectos:
+
+| Título             | Descripción      | Imagen                          | Enlace             |
+| ------------------ | ---------------- | ------------------------------- | ------------------ |
+| Mi primer proyecto | Una descripción  | https://via.placeholder.com/300 | https://google.com |
+| Proyecto 2         | Otra descripción | https://via.placeholder.com/300 | https://google.com |
+
+### Paso 6: Obtener tu Token API (5 min)
+
+1. Haz clic en tu perfil (arriba a la derecha)
+2. Ve a **Settings** → **Account**
+3. Busca **"API Tokens"**
+4. Haz clic en **"Create token"**
+5. Dale un nombre: "Mi Sitio"
+6. Cópialo (se ve así: `ab1234xyz...`)
+
+**IMPORTANTE**: Guarda este token en un lugar seguro. No lo compartas con nadie.
+
+### Paso 7: Obtener tus IDs (5 min)
+
+1. Ve a tu base de datos
+2. Mira la URL en el navegador:
+
+   ```
+   https://api.baserow.io/database/12345/table/67890/
+   ```
+
+   - `12345` = Tu DB_ID
+   - `67890` = Tu TABLE_ID
+
+Copia estos números.
+
+### Paso 8: Configurar la plantilla (5 min)
+
+1. Abre el archivo `src/config.js`
+2. Busca esto y llénalo:
+
+```javascript
+export const BASEROW = {
+  urlBaserow: 'https://api.baserow.io', // Mantén así
+  token: 'TU_TOKEN_AQUI', // Reemplaza con tu token
+  idBaseDatos: 12345, // Tu número
+};
+
+export const TABLA_PROYECTOS = {
+  id: 67890, // Tu número
+  campos: {
+    titulo: 'Título', // Igual al nombre en Baserow
+    descripcion: 'Descripción', // Igual al nombre en Baserow
+    imagen: 'Imagen', // Igual al nombre en Baserow
+    enlace: 'Enlace', // Igual al nombre en Baserow
+  },
+};
+
+export const SITIO = {
+  titulo: 'Mi Sitio', // El nombre que quieras
+  descripcion: 'Mi primer sitio', // Descripción breve
+  autor: 'Tu nombre aquí', // Tu nombre
+  urlSitio: 'https://ejemplo.com', // URL de prueba
+};
+```
+
+### Paso 9: Configurar el CMS (Opcional pero recomendado)
+
+El CMS te permite cambiar el contenido del sitio (introducción, descripción de la colección, contacto) directamente desde Baserow, sin editar código.
+
+**Lee esta guía para configurar el CMS:**
+
+→ [CONFIGURAR_CMS.md](CONFIGURAR_CMS.md)
+
+Toma unos 10 minutos extra, pero luego puedes editar todo desde Baserow.
+
+### Paso 10: Probar localmente (5 min)
+
+1. Abre la terminal en la carpeta del proyecto
+2. Escribe: `npm run dev`
+3. Abre http://localhost:3000 en el navegador
+
+**¡Deberías ver tus proyectos de Baserow!** 🎉
+
+Si no ves la introducción (después de configurar CMS):
+
+- Abre la consola (F12)
+- Si dice que `DATOS_SITIO` no está configurada, revisa [CONFIGURAR_CMS.md](CONFIGURAR_CMS.md)
+
+### Paso 11: Publicar en GitHub Pages (10 min)
+
+1. Ve a https://github.com y crea un repositorio **público**.
+2. Sube este proyecto a la rama `main` (puedes usar GitHub Desktop o git).
+3. En tu repositorio: **Settings** → **Pages**.
+4. En "Source" selecciona **"GitHub Actions"**.
+
+Espera 2-3 minutos y tu sitio estará en:
+
+```
+https://tuusuario.github.io/mi-sitio
+```
+
+### 🎉 ¡LISTO!
+
+Tu sitio está en línea. Cada vez que hagas `git push` a `main`, GitHub Actions compila y publica automáticamente.
+
+## Siguiente nivel: Personalización
+
+Una vez funcione, puedes:
+
+- ✏️ Cambiar colores en `src/scss/estilos.scss`
+- 🎨 Agregar tu logo a `estaticos/`
+- 📱 Mejorar el diseño en `index.html`
+- 🔌 Agregar más tablas a `src/config.js`
+- 💾 Agregar formulario de contacto
+- 📝 Editar contenido desde el CMS en Baserow
+
+Consulta el README.md para estos pasos.
+
+## Troubleshooting
+
+**"No veo mis datos"**
+
+- Abre la consola (F12) en el navegador
+- ¿Ves un error rojo? Significa que:
+  - Tu token está mal
+  - Tu DB_ID o TABLE_ID está mal
+  - Los nombres de los campos no coinciden
+
+**"No veo la introducción"**
+
+- Configuraste el CMS en [CONFIGURAR_CMS.md](CONFIGURAR_CMS.md)?
+- ¿El `DATOS_SITIO.id` en config.js está en 0? Si es así, es normal. Lee [CONFIGURAR_CMS.md](CONFIGURAR_CMS.md)
+- Abre la consola (F12) para ver mensajes de error
+
+**"Mi sitio no existe en GitHub Pages"**
+
+- ¿Hiciste el paso E (Settings → Pages)?
+- ¿Subiste los archivos?
+- Espera 5 minutos, a veces tarda
+- Intenta refrescar la página (Ctrl + F5)
+- Ve a la pestaña "Actions" en GitHub para ver el estado del build
+
+**Perdí mi token**
+
+- Vuelve a Baserow
+- Ve a Settings → API Tokens
+- Borra el anterior y crea uno nuevo
+
+¡Éxito! 🚀
